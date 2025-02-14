@@ -1,5 +1,5 @@
 {
-  "name": "analytic-api",
+  "name": "@viihunnid/analytic-api",
   "version": "1.0.0",
   "description": "Analytics and email tracking package",
   "main": "dist/index.js",
