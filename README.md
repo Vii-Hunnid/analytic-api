@@ -117,7 +117,7 @@ export async function POST(req: Request) {
   await webhookHandler.handleWebhook(
     body,
     req.headers.get('signature') || '',
-    process.env.WEBHOOK_SECRET || '',
+    process.env.WEBHOOK_SECRET || ''
   );
 
   return Response.json({ success: true });

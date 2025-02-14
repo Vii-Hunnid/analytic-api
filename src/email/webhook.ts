@@ -18,11 +18,7 @@ export class EmailWebhookHandler {
     await this.processWebhookEvent(payload);
   }
 
-  private verifySignature(
-    payload: any,
-    signature: string,
-    secret: string,
-  ): boolean {
+  private verifySignature(payload: any, signature: string, secret: string): boolean {
     const hmac = crypto.createHmac('sha256', secret);
     const digest = hmac.update(JSON.stringify(payload)).digest('hex');
     return signature === digest;

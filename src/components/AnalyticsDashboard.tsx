@@ -11,10 +11,7 @@ interface DashboardProps {
   granularity: 'hour' | 'day' | 'week' | 'month';
 }
 
-export const AnalyticsDashboard: React.FC<DashboardProps> = ({
-  timeRange,
-  granularity,
-}) => {
+export const AnalyticsDashboard: React.FC<DashboardProps> = ({ timeRange, granularity }) => {
   const [metrics, setMetrics] = useState<any>(null);
   const metricsAnalyzer = new MetricsAnalyzer();
   const realtime = new RealtimeAnalytics();

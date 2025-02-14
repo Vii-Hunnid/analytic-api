@@ -10,31 +10,23 @@ export class StorageClient {
 
   constructor() {
     // Initialize Supabase
-    if (
-      process.env.NEXT_PUBLIC_SUPABASE_URL &&
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    ) {
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
       this.supabase = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
       );
     }
 
     // Initialize Firebase
     if (process.env.NEXT_PUBLIC_FIREBASE_CONFIG) {
-      const app = initializeApp(
-        JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG),
-      );
+      const app = initializeApp(JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG));
       this.firebase = getFirestore(app);
     }
   }
 
   async storeEvent(event: TrackingEvent) {
     if (this.supabase) {
-      const { data, error } = await this.supabase
-        .from('events')
-        .insert(event)
-        .select();
+      const { data, error } = await this.supabase.from('events').insert(event).select();
 
       if (error) throw error;
       return data;
@@ -95,7 +87,7 @@ export class StorageClient {
         acc[hour] = (acc[hour] || 0) + 1;
         return acc;
       },
-      {} as Record<number, number>,
+      {} as Record<number, number>
     );
   }
 
@@ -107,20 +99,15 @@ export class StorageClient {
         }
         return acc;
       },
-      {} as Record<string, number>,
+      {} as Record<string, number>
     );
   }
 
   private calculateAverageDuration(events: TrackingEvent[]) {
-    const timeSpentEvents = events.filter(
-      (e) => e.type === 'timeSpent' && e.duration,
-    );
+    const timeSpentEvents = events.filter((e) => e.type === 'timeSpent' && e.duration);
     if (timeSpentEvents.length === 0) return 0;
 
-    const total = timeSpentEvents.reduce(
-      (sum, e) => sum + (e.duration || 0),
-      0,
-    );
+    const total = timeSpentEvents.reduce((sum, e) => sum + (e.duration || 0), 0);
     return total / timeSpentEvents.length;
   }
 }

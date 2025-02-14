@@ -44,10 +44,7 @@ export class TrackingManager {
     this.notifyRealtimeClients(fullEvent);
   }
 
-  private generateTrackingUrl(
-    type: 'open' | 'click',
-    metadata: Record<string, any>,
-  ): string {
+  private generateTrackingUrl(type: 'open' | 'click', metadata: Record<string, any>): string {
     const trackingId = crypto.randomBytes(16).toString('hex');
     const params = new URLSearchParams({
       type,

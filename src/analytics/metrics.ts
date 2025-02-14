@@ -10,10 +10,7 @@ export class MetricsAnalyzer {
   }
 
   async getMetrics(config: MetricsConfig) {
-    const events = await this.storageClient.getEvents(
-      config.timeRange.start,
-      config.timeRange.end,
-    );
+    const events = await this.storageClient.getEvents(config.timeRange.start, config.timeRange.end);
 
     return {
       clicks: this.aggregateClicks(events),
@@ -35,9 +32,6 @@ export class MetricsAnalyzer {
     const timeSpentEvents = events.filter((e) => e.type === 'timeSpent');
     if (timeSpentEvents.length === 0) return 0;
 
-    return (
-      timeSpentEvents.reduce((sum, e) => sum + (e.duration || 0), 0) /
-      timeSpentEvents.length
-    );
+    return timeSpentEvents.reduce((sum, e) => sum + (e.duration || 0), 0) / timeSpentEvents.length;
   }
 }
