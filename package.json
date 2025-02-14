@@ -5,6 +5,8 @@
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "access": "public",
+  "commit": true,
   "files": [
     "dist"
   ],
@@ -15,11 +17,12 @@
     "build:cjs": "rollup src/index.ts --format cjs --file dist/index.js",
     "build:esm": "rollup src/index.ts --format esm --file dist/index.esm.js",
     "build:umd": "rollup src/index.ts --format umd --name analyticApi --file dist/index.umd.js",
-    "prepublishOnly": "npm run build",
-    "ci": "npm run build",
+    "prepublishOnly": "npm run build && npm run ci",
+    "ci": "npm run build && npm run check-format && npm run check-exports && npm run lint && npm run test",
     "format": "prettier --write .",
-    "check-format": "prettier --check ."
-
+    "check-format": "prettier --check .",
+    "check-exports": "attw --pack .",
+    "local-release": "changeset version && changeset publish"
   },
   "keywords": [
     "analytics",
@@ -37,6 +40,8 @@
     "resend": "^2.0.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.3",
+    "@changesets/cli": "^2.27.12",
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^12.1.2",
