@@ -1,4 +1,4 @@
-# Analytic-API
+# @viihunnid/analytic-api
 
 A comprehensive analytics and email tracking package for Next.js applications. Track user interactions, monitor email engagement, and gather real-time analytics with ease.
 
@@ -21,7 +21,7 @@ A comprehensive analytics and email tracking package for Next.js applications. T
 ## Installation
 
 ```bash
-npm install analytic-api
+npm install @viihunnid/analytic-api
 ```
 
 ## Environment Setup
@@ -40,7 +40,7 @@ NEXT_PUBLIC_APP_URL=your_app_url
 ### 1. Track Component Interactions
 
 ```tsx
-import { TrackableComponent } from 'analytic-api';
+import { TrackableComponent } from '@viihunnid/analytic-api';
 
 export default function HomePage() {
   return (
@@ -54,7 +54,7 @@ export default function HomePage() {
 ### 2. Send Tracked Emails
 
 ```tsx
-import { EmailClient } from 'analytic-api';
+import { EmailClient } from '@viihunnid/analytic-api';
 
 export async function sendWelcomeEmail(userEmail: string) {
   const emailClient = new EmailClient();
@@ -73,7 +73,7 @@ export async function sendWelcomeEmail(userEmail: string) {
 ### 3. Display Analytics Dashboard
 
 ```tsx
-import { AnalyticsDashboard } from 'analytic-api';
+import { AnalyticsDashboard } from '@viihunnid/analytic-api';
 
 export default function AnalyticsPage() {
   return (
@@ -93,7 +93,7 @@ export default function AnalyticsPage() {
 ### 1. Track Events (app/api/track/route.ts)
 
 ```tsx
-import { TrackingManager } from 'analytic-api';
+import { TrackingManager } from '@viihunnid/analytic-api';
 
 export async function POST(req: Request) {
   const trackingManager = new TrackingManager();
@@ -108,7 +108,7 @@ export async function POST(req: Request) {
 ### 2. Email Webhook (app/api/email-webhook/route.ts)
 
 ```tsx
-import { EmailWebhookHandler } from 'analytic-api';
+import { EmailWebhookHandler } from '@viihunnid/analytic-api';
 
 export async function POST(req: Request) {
   const webhookHandler = new EmailWebhookHandler();
@@ -151,7 +151,7 @@ CREATE INDEX idx_events_timestamp ON events(timestamp);
 ### 1. Custom Email Templates
 
 ```typescript
-import { EmailClient } from 'analytic-api';
+import { EmailClient } from '@viihunnid/analytic-api';
 
 const emailClient = new EmailClient();
 
@@ -169,7 +169,7 @@ await emailClient.send({
 ### 2. Real-time Analytics
 
 ```typescript
-import { RealtimeAnalytics } from 'analytic-api';
+import { RealtimeAnalytics } from '@viihunnid/analytic-api';
 
 const realtime = new RealtimeAnalytics();
 
@@ -180,7 +180,7 @@ realtime.addClient(websocket);
 ## Configuration Options
 
 ```typescript
-import { getConfig } from 'analytic-api';
+import { getConfig } from '@viihunnid/analytic-api';
 
 const config = getConfig();
 // Access environment variables and configuration
@@ -217,4 +217,4 @@ MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Support
 
-For support, email support@yourcompany.com or create an issue in the GitHub repository.
+For support, email viihunnid@icloud.com or create an issue in the GitHub repository.

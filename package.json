@@ -1,6 +1,6 @@
 {
   "name": "@viihunnid/analytic-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A comprehensive analytics and email tracking package for Next.js applications",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -22,7 +22,6 @@
     "local-release": "changeset version && changeset publish",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
-    "build": "rollup -c --bundleConfigAsCjs",
     "prepublishOnly": "npm run format && npm run build"
   },
   "keywords": [
