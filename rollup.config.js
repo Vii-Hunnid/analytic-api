@@ -1,32 +1,35 @@
 // rollup.config.js
-import typescript from '@rollup/plugin-typescript';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
+const typescript = require('@rollup/plugin-typescript');
+const resolve = require('@rollup/plugin-node-resolve');
+const commonjs = require('@rollup/plugin-commonjs');
 
-export default {
+module.exports = {
   input: 'src/index.ts',
   output: [
     {
       file: 'dist/index.js',
       format: 'cjs',
-      sourcemap: true
+      sourcemap: true,
+      name: 'analyticApi',
     },
     {
       file: 'dist/index.esm.js',
       format: 'esm',
-      sourcemap: true
-    }
+      sourcemap: true,
+    },
+    {
+      file: 'dist/index.umd.js',
+      format: 'umd',
+      name: 'analyticApi',
+      sourcemap: true,
+    },
   ],
-  plugins: [
-    typescript(),
-    resolve(),
-    commonjs()
-  ],
+  plugins: [typescript(), resolve(), commonjs()],
   external: [
     'react',
     'react-dom',
     '@supabase/supabase-js',
     'firebase',
-    'resend'
-  ]
+    'resend',
+  ],
 };

@@ -11,10 +11,10 @@ interface TrackableComponentProps {
 export const TrackableComponent: React.FC<TrackableComponentProps> = ({
   elementId,
   onMetricsUpdate,
-  children
+  children,
 }) => {
   const trackingManager = new TrackingManager();
-  
+
   const handleClick = useCallback(async () => {
     await trackingManager.trackEvent({
       type: 'click',
@@ -48,9 +48,5 @@ export const TrackableComponent: React.FC<TrackableComponentProps> = ({
     };
   }, [elementId]);
 
-  return (
-    <div onClick={handleClick}>
-      {children}
-    </div>
-  );
+  return <div onClick={handleClick}>{children}</div>;
 };

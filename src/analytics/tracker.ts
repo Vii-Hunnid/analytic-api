@@ -20,10 +20,10 @@ export class TrackingManager {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
 
-    doc.querySelectorAll('a').forEach(link => {
+    doc.querySelectorAll('a').forEach((link) => {
       const trackingUrl = this.generateTrackingUrl('click', {
         originalUrl: link.href,
-        ...metadata
+        ...metadata,
       });
       link.href = trackingUrl;
     });
@@ -34,7 +34,7 @@ export class TrackingManager {
   async trackEvent(event: Omit<TrackingEvent, 'timestamp'>) {
     const fullEvent: TrackingEvent = {
       ...event,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
     // Store event
@@ -44,19 +44,22 @@ export class TrackingManager {
     this.notifyRealtimeClients(fullEvent);
   }
 
-  private generateTrackingUrl(type: 'open' | 'click', metadata: Record<string, any>): string {
+  private generateTrackingUrl(
+    type: 'open' | 'click',
+    metadata: Record<string, any>,
+  ): string {
     const trackingId = crypto.randomBytes(16).toString('hex');
     const params = new URLSearchParams({
       type,
       id: trackingId,
-      ...metadata
+      ...metadata,
     });
-    
+
     return `${process.env.NEXT_PUBLIC_APP_URL}/api/track?${params.toString()}`;
   }
 
   private notifyRealtimeClients(event: TrackingEvent) {
-    this.realtimeClients.forEach(client => {
+    this.realtimeClients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(event));
       }

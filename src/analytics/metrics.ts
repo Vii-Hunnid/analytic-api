@@ -12,29 +12,32 @@ export class MetricsAnalyzer {
   async getMetrics(config: MetricsConfig) {
     const events = await this.storageClient.getEvents(
       config.timeRange.start,
-      config.timeRange.end
+      config.timeRange.end,
     );
 
     return {
       clicks: this.aggregateClicks(events),
       views: this.aggregateViews(events),
       timeSpent: this.aggregateTimeSpent(events),
-      granularity: config.granularity
+      granularity: config.granularity,
     };
   }
 
   private aggregateClicks(events: any[]) {
-    return events.filter(e => e.type === 'click').length;
+    return events.filter((e) => e.type === 'click').length;
   }
 
   private aggregateViews(events: any[]) {
-    return events.filter(e => e.type === 'view').length;
+    return events.filter((e) => e.type === 'view').length;
   }
 
   private aggregateTimeSpent(events: any[]) {
-    const timeSpentEvents = events.filter(e => e.type === 'timeSpent');
+    const timeSpentEvents = events.filter((e) => e.type === 'timeSpent');
     if (timeSpentEvents.length === 0) return 0;
-    
-    return timeSpentEvents.reduce((sum, e) => sum + (e.duration || 0), 0) / timeSpentEvents.length;
+
+    return (
+      timeSpentEvents.reduce((sum, e) => sum + (e.duration || 0), 0) /
+      timeSpentEvents.length
+    );
   }
 }

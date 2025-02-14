@@ -18,14 +18,14 @@ export class EmailClient {
     if (config.trackClicks) {
       html = this.trackingManager.injectClickTracking(html, {
         emailId: crypto.randomUUID(),
-        metadata: config.metadata
+        metadata: config.metadata,
       });
     }
 
     if (config.trackOpens) {
       html += this.trackingManager.createTrackingPixel({
         emailId: crypto.randomUUID(),
-        metadata: config.metadata
+        metadata: config.metadata,
       });
     }
 
@@ -33,7 +33,7 @@ export class EmailClient {
       from: config.from,
       to: config.to,
       subject: config.subject,
-      html
+      html,
     });
   }
 }

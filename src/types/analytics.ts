@@ -9,7 +9,7 @@ export interface TrackingEvent {
   metadata?: Record<string, any>;
   timestamp: Date;
 }
- 
+
 export interface MetricsConfig {
   timeRange: {
     start: Date;

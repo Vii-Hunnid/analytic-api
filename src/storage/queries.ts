@@ -1,7 +1,7 @@
 // src/storage/queries.ts
 export const queries = {
-    createTables: {
-      events: `
+  createTables: {
+    events: `
         CREATE TABLE IF NOT EXISTS events (
           id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
           type VARCHAR NOT NULL,
@@ -11,7 +11,7 @@ export const queries = {
           session_id VARCHAR
         );
       `,
-      metrics: `
+    metrics: `
         CREATE TABLE IF NOT EXISTS metrics (
           id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
           type VARCHAR NOT NULL,
@@ -19,10 +19,10 @@ export const queries = {
           timestamp TIMESTAMPTZ DEFAULT NOW(),
           metadata JSONB
         );
-      `
-    },
-    indexes: {
-      eventsTypeIdx: `CREATE INDEX IF NOT EXISTS idx_events_type ON events(type);`,
-      eventsTimestampIdx: `CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events(timestamp);`
-    }
-  };
+      `,
+  },
+  indexes: {
+    eventsTypeIdx: `CREATE INDEX IF NOT EXISTS idx_events_type ON events(type);`,
+    eventsTimestampIdx: `CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events(timestamp);`,
+  },
+};

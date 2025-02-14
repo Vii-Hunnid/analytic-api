@@ -13,7 +13,7 @@ interface DashboardProps {
 
 export const AnalyticsDashboard: React.FC<DashboardProps> = ({
   timeRange,
-  granularity
+  granularity,
 }) => {
   const [metrics, setMetrics] = useState<any>(null);
   const metricsAnalyzer = new MetricsAnalyzer();
@@ -24,7 +24,7 @@ export const AnalyticsDashboard: React.FC<DashboardProps> = ({
       const data = await metricsAnalyzer.getMetrics({
         timeRange,
         granularity,
-        metrics: ['clicks', 'views', 'timeSpent']
+        metrics: ['clicks', 'views', 'timeSpent'],
       });
       setMetrics(data);
     };

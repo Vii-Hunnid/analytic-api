@@ -10,16 +10,21 @@ export class StorageClient {
 
   constructor() {
     // Initialize Supabase
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    if (
+      process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    ) {
       this.supabase = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
       );
     }
 
     // Initialize Firebase
     if (process.env.NEXT_PUBLIC_FIREBASE_CONFIG) {
-      const app = initializeApp(JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG));
+      const app = initializeApp(
+        JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG),
+      );
       this.firebase = getFirestore(app);
     }
   }
@@ -30,15 +35,13 @@ export class StorageClient {
         .from('events')
         .insert(event)
         .select();
-        
+
       if (error) throw error;
       return data;
     }
-    
+
     if (this.firebase) {
-      const docRef = await this.firebase
-        .collection('events')
-        .add(event);
+      const docRef = await this.firebase.collection('events').add(event);
       return { id: docRef.id };
     }
 
@@ -68,7 +71,7 @@ export class StorageClient {
       }
 
       const { data, error } = await query;
-      
+
       if (error) throw error;
       return this.aggregateMetrics(data);
     }
@@ -81,32 +84,43 @@ export class StorageClient {
       total: events.length,
       byHour: this.groupByHour(events),
       byUser: this.groupByUser(events),
-      averageDuration: this.calculateAverageDuration(events)
+      averageDuration: this.calculateAverageDuration(events),
     };
   }
 
   private groupByHour(events: TrackingEvent[]) {
-    return events.reduce((acc, event) => {
-      const hour = new Date(event.timestamp).getHours();
-      acc[hour] = (acc[hour] || 0) + 1;
-      return acc;
-    }, {} as Record<number, number>);
+    return events.reduce(
+      (acc, event) => {
+        const hour = new Date(event.timestamp).getHours();
+        acc[hour] = (acc[hour] || 0) + 1;
+        return acc;
+      },
+      {} as Record<number, number>,
+    );
   }
 
   private groupByUser(events: TrackingEvent[]) {
-    return events.reduce((acc, event) => {
-      if (event.userId) {
-        acc[event.userId] = (acc[event.userId] || 0) + 1;
-      }
-      return acc;
-    }, {} as Record<string, number>);
+    return events.reduce(
+      (acc, event) => {
+        if (event.userId) {
+          acc[event.userId] = (acc[event.userId] || 0) + 1;
+        }
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
   }
 
   private calculateAverageDuration(events: TrackingEvent[]) {
-    const timeSpentEvents = events.filter(e => e.type === 'timeSpent' && e.duration);
+    const timeSpentEvents = events.filter(
+      (e) => e.type === 'timeSpent' && e.duration,
+    );
     if (timeSpentEvents.length === 0) return 0;
-    
-    const total = timeSpentEvents.reduce((sum, e) => sum + (e.duration || 0), 0);
+
+    const total = timeSpentEvents.reduce(
+      (sum, e) => sum + (e.duration || 0),
+      0,
+    );
     return total / timeSpentEvents.length;
   }
 }
@@ -129,5 +143,5 @@ export const createTables = {
     CREATE INDEX idx_events_type ON events(type);
     CREATE INDEX idx_events_timestamp ON events(timestamp);
     CREATE INDEX idx_events_user_id ON events(user_id);
-  `
+  `,
 };

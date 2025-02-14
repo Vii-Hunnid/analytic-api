@@ -8,13 +8,11 @@ A comprehensive analytics and email tracking package for Next.js applications. T
   - Track email opens and clicks
   - Custom email templates
   - Webhook support for email events
-  
 - 📊 Analytics
   - Component-level tracking
   - Page view analytics
   - Time spent metrics
   - Real-time updates
-  
 - 🔄 Database Integration
   - Supabase support
   - Firebase support
@@ -47,9 +45,7 @@ import { TrackableComponent } from 'analytic-api';
 export default function HomePage() {
   return (
     <TrackableComponent elementId="hero-section">
-      <button>
-        Click Me!
-      </button>
+      <button>Click Me!</button>
     </TrackableComponent>
   );
 }
@@ -62,14 +58,14 @@ import { EmailClient } from 'analytic-api';
 
 export async function sendWelcomeEmail(userEmail: string) {
   const emailClient = new EmailClient();
-  
+
   await emailClient.send({
     from: 'welcome@yourapp.com',
     to: userEmail,
     subject: 'Welcome!',
     html: '<p>Welcome to our platform!</p>',
     trackOpens: true,
-    trackClicks: true
+    trackClicks: true,
   });
 }
 ```
@@ -81,10 +77,10 @@ import { AnalyticsDashboard } from 'analytic-api';
 
 export default function AnalyticsPage() {
   return (
-    <AnalyticsDashboard 
+    <AnalyticsDashboard
       timeRange={{
         start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-        end: new Date()
+        end: new Date(),
       }}
       granularity="day"
     />
@@ -102,9 +98,9 @@ import { TrackingManager } from 'analytic-api';
 export async function POST(req: Request) {
   const trackingManager = new TrackingManager();
   const body = await req.json();
-  
+
   await trackingManager.trackEvent(body);
-  
+
   return Response.json({ success: true });
 }
 ```
@@ -117,13 +113,13 @@ import { EmailWebhookHandler } from 'analytic-api';
 export async function POST(req: Request) {
   const webhookHandler = new EmailWebhookHandler();
   const body = await req.json();
-  
+
   await webhookHandler.handleWebhook(
     body,
     req.headers.get('signature') || '',
-    process.env.WEBHOOK_SECRET || ''
+    process.env.WEBHOOK_SECRET || '',
   );
-  
+
   return Response.json({ success: true });
 }
 ```
@@ -165,8 +161,8 @@ await emailClient.send({
   template: 'welcome',
   data: {
     name: 'John Doe',
-    activationLink: 'https://yourapp.com/activate'
-  }
+    activationLink: 'https://yourapp.com/activate',
+  },
 });
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "@viihunnid/analytic-api",
   "version": "1.0.0",
-  "description": "Analytics and email tracking package",
+  "description": "A comprehensive analytics and email tracking package for Next.js applications",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -9,10 +9,17 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c --bundleConfigAsCjs",
     "dev": "rollup -c -w",
     "type-check": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "build:cjs": "rollup src/index.ts --format cjs --file dist/index.js",
+    "build:esm": "rollup src/index.ts --format esm --file dist/index.esm.js",
+    "build:umd": "rollup src/index.ts --format umd --name analyticApi --file dist/index.umd.js",
+    "prepublishOnly": "npm run build",
+    "ci": "npm run build",
+    "format": "prettier --write .",
+    "check-format": "prettier --check ."
+
   },
   "keywords": [
     "analytics",
@@ -25,8 +32,17 @@
   "peerDependencies": {
     "@supabase/supabase-js": "^2.0.0",
     "firebase": "^10.0.0",
-    "resend": "^2.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "resend": "^2.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "prettier": "^3.5.1",
+    "rollup": "^4.34.6",
+    "tslib": "^2.8.1",
+    "typescript": "^5.7.3"
   }
 }

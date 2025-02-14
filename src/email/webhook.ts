@@ -1,4 +1,3 @@
-
 // src/email/webhook.ts
 import crypto from 'crypto';
 import { WebhookConfig } from '../types/email';
@@ -6,7 +5,7 @@ import { StorageClient } from '../storage/client';
 
 export class EmailWebhookHandler {
   private storageClient: StorageClient;
-  
+
   constructor() {
     this.storageClient = new StorageClient();
   }
@@ -19,7 +18,11 @@ export class EmailWebhookHandler {
     await this.processWebhookEvent(payload);
   }
 
-  private verifySignature(payload: any, signature: string, secret: string): boolean {
+  private verifySignature(
+    payload: any,
+    signature: string,
+    secret: string,
+  ): boolean {
     const hmac = crypto.createHmac('sha256', secret);
     const digest = hmac.update(JSON.stringify(payload)).digest('hex');
     return signature === digest;
@@ -29,7 +32,7 @@ export class EmailWebhookHandler {
     await this.storageClient.storeEvent({
       type: 'email_event',
       data: payload,
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 }

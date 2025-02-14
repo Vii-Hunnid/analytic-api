@@ -7,14 +7,14 @@ export class RealtimeAnalytics {
 
   addClient(ws: WebSocket) {
     this.clients.add(ws);
-    
+
     ws.on('close', () => {
       this.clients.delete(ws);
     });
   }
 
   broadcastEvent(event: TrackingEvent) {
-    this.clients.forEach(client => {
+    this.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(event));
       }
